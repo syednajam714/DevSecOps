@@ -19,12 +19,13 @@ pipeline {
        }
     }
 
-stage ('Deploy-To-Tomcat') {
-            steps {
-           sshagent(['tomcat']) {
-                sh 'scp -o StrictHostKeyChecking=no target/*.war ubuntu@192.168.11.14/root/prod/apache-tomcat-8.5.39/webapps/webapp.war'
-              }      
-           }       
+stage ('Deploy to Tomcat') {
+      steps {
+        sshagent(['root']){
+            sh 'sshpass -p "P@ssw0rd" scp -o StrictHostKeyChecking=no /var/lib/jenkins/workspace/webapp-cicd-pipeline/target/WebApp.war root@192.168.11.14:/root/prod/apache-tomcat-9.0.71/webapps/webapp.war'    
+        
+        }
+       }
     }
 
     }
